@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Tetrimino : MonoBehaviour
 {
@@ -8,16 +7,16 @@ public class Tetrimino : MonoBehaviour
     private int partternXLength = 4;
     private int _rollParttern = 0;
     private Vector2Int basePos;
-    public GameManager.TetriminoType tetriminoType;
+    public TetorisLogic.TetriminoType tetriminoType;
     private int RollPartternNum
     {
-        get { return tetriminoType == GameManager.TetriminoType.Omino ? 1 : 4; }
+        get { return tetriminoType == TetorisLogic.TetriminoType.Omino ? 1 : 4; }
     }
     private int NextRollParttern
     {
         get { return _rollParttern + 1 < RollPartternNum ? _rollParttern + 1 : 0; }
     }
-    public void Init(GameManager.TetriminoType type)
+    public void Init(TetorisLogic.TetriminoType type)
     {
         tetriminoType = type;
         basePos = Vector2Int.zero;
@@ -62,9 +61,9 @@ public class Tetrimino : MonoBehaviour
         _rollParttern = NextRollParttern;
     }
 
-    public static readonly Dictionary<GameManager.TetriminoType, int[,,]> TetriminoPatterns = new Dictionary<GameManager.TetriminoType, int[,,]>
+    public static readonly Dictionary<TetorisLogic.TetriminoType, int[,,]> TetriminoPatterns = new Dictionary<TetorisLogic.TetriminoType, int[,,]>
     {
-        { GameManager.TetriminoType.Imino, new int[,,]{
+        { TetorisLogic.TetriminoType.Imino, new int[,,]{
             {
                 {0,0,0,0},
                 {1,1,1,1},
@@ -89,7 +88,7 @@ public class Tetrimino : MonoBehaviour
                 {0,1,0,0}
             }
          } },
-        { GameManager.TetriminoType.Omino, new int[,,]{
+        { TetorisLogic.TetriminoType.Omino, new int[,,]{
             {
                 {0,1,1,0},
                 {0,1,1,0},
@@ -97,7 +96,7 @@ public class Tetrimino : MonoBehaviour
                 {0,0,0,0}
             }
          } },
-         { GameManager.TetriminoType.Smino, new int[,,]{
+         { TetorisLogic.TetriminoType.Smino, new int[,,]{
             {
                 {0,1,1,0},
                 {1,1,0,0},
@@ -122,7 +121,7 @@ public class Tetrimino : MonoBehaviour
                 {0,0,0,0}
             }
          }  },
-         { GameManager.TetriminoType.Zmino, new int[,,]{
+         { TetorisLogic.TetriminoType.Zmino, new int[,,]{
             {
                 {1,1,0,0},
                 {0,1,1,0},
@@ -148,7 +147,7 @@ public class Tetrimino : MonoBehaviour
                 {0,0,0,0}
             }
          }  },
-         { GameManager.TetriminoType.Jmino, new int[,,]{
+         { TetorisLogic.TetriminoType.Jmino, new int[,,]{
             {
                 {1,0,0,0},
                 {1,1,1,0},
@@ -173,7 +172,7 @@ public class Tetrimino : MonoBehaviour
                 {0,0,0,0}
             }
          }  },
-         { GameManager.TetriminoType.Lmino, new int[,,]{
+         { TetorisLogic.TetriminoType.Lmino, new int[,,]{
             {
                 {0,0,1,0},
                 {1,1,1,0},
@@ -198,7 +197,7 @@ public class Tetrimino : MonoBehaviour
                 {0,0,0,0}
             }
          }  },
-         { GameManager.TetriminoType.Tmino, new int[,,]{
+         { TetorisLogic.TetriminoType.Tmino, new int[,,]{
             {
                 {0,1,0,0},
                 {1,1,1,0},
