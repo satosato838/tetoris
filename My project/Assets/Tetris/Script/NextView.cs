@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NextManager : MonoBehaviour
+public class NextView : MonoBehaviour
 {
     [SerializeField] private GridLayoutGroup _grid;
     [SerializeField] private Block _blockPrefab;
-    [SerializeField] private GameManager _blockManager;
+    [SerializeField] private GameView _blockManager;
     List<List<Block>> _allblocks = new List<List<Block>>();
-    private GameManager.TetriminoType[,] _nextTetrimino;
+    private TetorisLogic.TetriminoType[,] _nextTetrimino;
     private Tetrimino _NextMino = new Tetrimino();
 
     public const int width = 4;
@@ -51,10 +51,10 @@ public class NextManager : MonoBehaviour
         }
     }
 
-    public void CreateNext(GameManager.TetriminoType tetriminoType)
+    public void CreateNext(TetorisLogic.TetriminoType tetriminoType)
     {
         Reset();
-        _nextTetrimino = new GameManager.TetriminoType[height, width];
+        _nextTetrimino = new TetorisLogic.TetriminoType[height, width];
         _NextMino.Init(tetriminoType);
         Draw();
     }

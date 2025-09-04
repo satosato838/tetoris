@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleManager : MonoBehaviour
+public class TitleView : MonoBehaviour
 {
     [SerializeField] private Button _startButton;
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private GameView _gameView;
     void Start()
     {
         _startButton.onClick.AddListener(() =>
         {
-            _gameManager.InitGame();
+            _gameView.InitGame();
         });
         Show();
     }
