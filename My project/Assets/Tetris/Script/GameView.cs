@@ -27,7 +27,7 @@ public class GameView : MonoBehaviour
 
     public void InitGame()
     {
-        _tetorisLogic = new TetorisLogic(() => GameOver());
+        _tetorisLogic = new TetorisLogic(() => ShowGameOverResult());
 
         _gamePanel.SetActive(true);
         _gameOverText.SetActive(false);
@@ -55,10 +55,9 @@ public class GameView : MonoBehaviour
         _nextView.CreateNext(_tetorisLogic.GetNexTetriminoType());
     }
 
-    private void GameOver()
+    private void ShowGameOverResult()
     {
         SoundManager.Instance.PlayBGM(BGMSoundData.BGM.gameover);
-        _tetorisLogic.GameOver();
         _gameOverText.SetActive(true);
     }
 
