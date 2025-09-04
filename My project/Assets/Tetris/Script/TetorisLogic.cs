@@ -213,4 +213,29 @@ public class TetorisLogic
             }
         }
     }
+
+    public Color GetColor(TetriminoType type)
+    {
+        switch (type)
+        {
+            case TetriminoType.None:
+                return Color.black;
+            case TetriminoType.Imino:
+                return Color.cyan;
+            case TetriminoType.Omino:
+                return Color.yellow;
+            case TetriminoType.Tmino:
+                return new Color(0.6f, 0f, 1f); // Purple
+            case TetriminoType.Smino:
+                return Color.green;
+            case TetriminoType.Zmino:
+                return Color.red;
+            case TetriminoType.Jmino:
+                return Color.blue;
+            case TetriminoType.Lmino:
+                return new Color(1f, 0.5f, 0f); // Orange
+            default:
+                return Color.white;
+        }
+    }
 }

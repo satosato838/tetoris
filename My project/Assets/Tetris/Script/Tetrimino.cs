@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tetrimino : MonoBehaviour
+public class Tetrimino
 {
     private int partternYLength = 4;
     private int partternXLength = 4;

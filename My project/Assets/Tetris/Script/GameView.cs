@@ -11,6 +11,8 @@ public class GameView : MonoBehaviour
     [SerializeField] private Block blockPrefab;
     [SerializeField] private GridLayoutGroup _grid;
 
+
+
     [SerializeField] private GameObject _gameOverText;
     private TetorisLogic _tetorisLogic;
 
@@ -178,29 +180,7 @@ public class GameView : MonoBehaviour
             block.SetColor(GetColor(_tetorisLogic.CurrentTetriminoType));
         }
     }
+    public Color GetColor(TetorisLogic.TetriminoType tetriminoType) => _tetorisLogic.GetColor(tetriminoType);
 
-    public Color GetColor(TetorisLogic.TetriminoType type)
-    {
-        switch (type)
-        {
-            case TetorisLogic.TetriminoType.None:
-                return Color.black;
-            case TetorisLogic.TetriminoType.Imino:
-                return Color.cyan;
-            case TetorisLogic.TetriminoType.Omino:
-                return Color.yellow;
-            case TetorisLogic.TetriminoType.Tmino:
-                return new Color(0.6f, 0f, 1f); // Purple
-            case TetorisLogic.TetriminoType.Smino:
-                return Color.green;
-            case TetorisLogic.TetriminoType.Zmino:
-                return Color.red;
-            case TetorisLogic.TetriminoType.Jmino:
-                return Color.blue;
-            case TetorisLogic.TetriminoType.Lmino:
-                return new Color(1f, 0.5f, 0f); // Orange
-            default:
-                return Color.white;
-        }
-    }
+
 }
