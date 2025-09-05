@@ -176,18 +176,31 @@ public class TetorisLogic
     public void FallEnd()
     {
         var pos = _currentTetrimino.GetPos();
-        SoundManager.Instance.PlaySE(SESoundData.SE.tyakuti);
+
         foreach (var p in pos)
         {
             _fieldTetriminos[p.y][p.x] = _currentTetrimino.tetriminoType;
         }
 
-        DeleteLines();
+        var deleteLineCount = DeleteLines();
+        if (deleteLineCount == 0)
+        {
+            SoundManager.Instance.PlaySE(SESoundData.SE.tyakuti);
+        }
+        else if (deleteLineCount == 4)
+        {
+            SoundManager.Instance.PlaySE(SESoundData.SE.tetris);
+        }
+        else
+        {
+            SoundManager.Instance.PlaySE(SESoundData.SE.deleteline);
+        }
         DropTetorimino(GetNexTetriminoType());
     }
 
-    public void DeleteLines()
+    private int DeleteLines()
     {
+        int deleteLineCount = 0;
         for (var y = TetrisFieldHeight - 1; y >= 0;)
         {
             var hasBlank = false;
@@ -204,6 +217,7 @@ public class TetorisLogic
                 y--;
                 continue;
             }
+            deleteLineCount++;
             for (var downY = y; downY > 0; downY--)
             {
                 for (var x = 0; x < TetrisFieldWidth; x++)
@@ -212,6 +226,7 @@ public class TetorisLogic
                 }
             }
         }
+        return deleteLineCount;
     }
 
     public Color GetColor(TetriminoType type)

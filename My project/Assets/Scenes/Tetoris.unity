@@ -292,16 +292,13 @@ MonoBehaviour:
   seSourceList:
   - se: 0
     audioClip: {fileID: 8300000, guid: 8039e1ce77a7540b0b58348b6240676c, type: 3}
-    volume: 1
+    volume: 0.5
   - se: 1
     audioClip: {fileID: 8300000, guid: 58584179fab3948be8aeaeb5bea93508, type: 3}
-    volume: 1
+    volume: 2
   - se: 2
     audioClip: {fileID: 8300000, guid: fe3a47e6516b04053b005e7edd98fb8f, type: 3}
-    volume: 1
-  - se: 2
-    audioClip: {fileID: 8300000, guid: fe3a47e6516b04053b005e7edd98fb8f, type: 3}
-    volume: 1
+    volume: 2
   - se: 3
     audioClip: {fileID: 8300000, guid: 79590d4d5def9437a8d61c7ed1e3e6e5, type: 3}
     volume: 1
@@ -531,7 +528,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &373219259
 CanvasRenderer:
@@ -1249,8 +1246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
-  m_SizeDelta: {x: -100, y: -100}
+  m_AnchoredPosition: {x: 20, y: -20}
+  m_SizeDelta: {x: -40, y: -40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1055284747
 MonoBehaviour:

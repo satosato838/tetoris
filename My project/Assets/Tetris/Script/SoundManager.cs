@@ -71,13 +71,13 @@ public class SESoundData
     {
         rotation,
         deleteline,
-        tetoris,
+        tetris,
         tyakuti,
         move
     }
 
     public SE se;
     public AudioClip audioClip;
-    [Range(0, 1)]
+    [Range(0, 2)]
     public float volume = 1;
 }
