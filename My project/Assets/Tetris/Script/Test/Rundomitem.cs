@@ -1,8 +1,6 @@
-using System.Collections;
+#if UNITY_EDITOR
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-
 public class Rundomitem
 {
     // A Test behaves as an ordinary method
@@ -24,3 +22,4 @@ public class Rundomitem
     }
 
 }
+#endif

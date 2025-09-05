@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tetris_ver1.4_background_0: 2912837045018363265
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
