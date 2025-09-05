@@ -24,6 +24,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGM(BGMSoundData.BGM bgm)
     {
+        if (_musicSource.isPlaying)
+        {
+            _musicSource.Stop();
+        }
         BGMSoundData data = musicSourceList.Find(data => data.bgm == bgm);
         _musicSource.clip = data.audioClip;
         _musicSource.loop = true;
@@ -34,6 +38,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySE(SESoundData.SE se)
     {
+        if (_seSource.isPlaying)
+        {
+            _seSource.Stop();
+        }
         SESoundData data = seSourceList.Find(data => data.se == se);
         _seSource.volume = data.volume;
         _seSource.PlayOneShot(data.audioClip);
