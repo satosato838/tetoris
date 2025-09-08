@@ -7,6 +7,7 @@ public class OseroView : MonoBehaviour
     [SerializeField] private OseroCellView OseroCellPrefab;
     [SerializeField] private Transform OseroCellParent;
     private Osero _osero;
+    private Color ClearColor => new Color(1, 1, 1, 0);
     private List<List<OseroCellView>> _AllCells = new List<List<OseroCellView>>();
     void Start()
     {
@@ -47,12 +48,17 @@ public class OseroView : MonoBehaviour
         {
             for (int x = 0; x < BoardSize; x++)
             {
-                _AllCells[x][y].SetDisk(disks[x, y].DiskState switch
+                if (disks[y, x].DiskState == Osero.DiskState.SetDot)
                 {
-                    Osero.DiskState.None => new Color(1, 1, 1, 0),
+                    _AllCells[y][x].SetDot(Color.black);
+                }
+                _AllCells[y][x].SetDisk(disks[y, x].DiskState switch
+                {
+                    Osero.DiskState.None => ClearColor,
+                    Osero.DiskState.SetDot => ClearColor,
                     Osero.DiskState.Black => Color.black,
                     Osero.DiskState.White => Color.white,
-                    _ => new Color(1, 1, 1, 0)
+                    _ => ClearColor
                 });
             }
         }
