@@ -17,11 +17,11 @@ public class OseroView : MonoBehaviour
             for (int x = 0; x < BoardSize; x++)
             {
                 var cell = Instantiate(OseroCellPrefab, OseroCellParent);
-                cell.name = $"Cell({x},{y})";
-                cell.Init((x, y), (xy) =>
+                cell.name = $"Cell({y},{x})";
+                cell.Init((y, x), (yx) =>
                 {
-                    Debug.Log($"Click {xy}");
-                    PlaceDisk(xy);
+                    Debug.Log($"Click {yx.Item1 + 1},{yx.Item2 + 1}");
+                    PlaceDisk(yx);
                 });
                 cells.Add(cell);
             }
@@ -48,18 +48,23 @@ public class OseroView : MonoBehaviour
         {
             for (int x = 0; x < BoardSize; x++)
             {
-                if (disks[y, x].DiskState == Osero.DiskState.SetDot)
+                if (disks[y, x].IsDot)
                 {
                     _AllCells[y][x].SetDot(_osero.CurrentTurnDiskColor == Osero.PlayerTurn.Black ? Color.black : Color.white);
+                }
+                else
+                {
+                    _AllCells[y][x].SetDot(ClearColor);
                 }
                 _AllCells[y][x].SetDisk(disks[y, x].DiskState switch
                 {
                     Osero.DiskState.None => ClearColor,
-                    Osero.DiskState.SetDot => ClearColor,
                     Osero.DiskState.Black => Color.black,
                     Osero.DiskState.White => Color.white,
                     _ => ClearColor
                 });
+                // if (disks[y, x].DiskState == Osero.DiskState.Black || disks[y, x].DiskState == Osero.DiskState.White)
+                //     Debug.Log($"disks[{y}][{x}]:" + disks[y, x].DiskState);
             }
         }
     }
