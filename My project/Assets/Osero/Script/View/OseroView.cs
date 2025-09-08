@@ -50,7 +50,7 @@ public class OseroView : MonoBehaviour
             {
                 if (disks[y, x].DiskState == Osero.DiskState.SetDot)
                 {
-                    _AllCells[y][x].SetDot(Color.black);
+                    _AllCells[y][x].SetDot(_osero.CurrentTurnDiskColor == Osero.PlayerTurn.Black ? Color.black : Color.white);
                 }
                 _AllCells[y][x].SetDisk(disks[y, x].DiskState switch
                 {

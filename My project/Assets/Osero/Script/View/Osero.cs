@@ -18,7 +18,9 @@ public class Osero
         White
     }
     public OseroDisk[,] BoardDisks { get; private set; } = new OseroDisk[8, 8];
-    public PlayerTurn CurrentTurnDiskColor { get; private set; } = PlayerTurn.Black;
+
+    private PlayerTurn firstPlayerColor = PlayerTurn.Black;
+    public PlayerTurn CurrentTurnDiskColor { get; private set; }
     public Osero()
     {
         StartGame();
@@ -26,7 +28,7 @@ public class Osero
 
     private void StartGame()
     {
-        CurrentTurnDiskColor = PlayerTurn.Black;
+        CurrentTurnDiskColor = firstPlayerColor;
         for (int y = 0; y < BoardSize; y++)
         {
             for (int x = 0; x < BoardSize; x++)
@@ -77,29 +79,35 @@ public class Osero
     {
         var y = yx.Item1;
         var x = yx.Item2;
-        if (y < 1 || BoardSize < y || x < 1 || BoardSize < x) { return false; }  //盤外には打てない
-        if (BoardDisks[y, x].DiskState != DiskState.None) { return false; }  //空マスでなければ打てない
+        if (y < 0 || y >= BoardSize || x < 0 || x >= BoardSize) return false; // 盤外
+        if (BoardDisks[y, x].DiskState != DiskState.None) return false; // 空マスのみ
 
-        //注目するマスの周囲8方向に対し、石を打てるか調べる
-        int rY, rX;  //調べるマスを移動させるのに使う変数
         for (int dY = -1; dY <= 1; dY++)
-        {  //横方向
+        {
             for (int dX = -1; dX <= 1; dX++)
-            {  //縦方向
-                rY = y + dY; rX = y + dX;  //調べるマスの初期値
+            {
+                if (dY == 0 && dX == 0) continue; // 方向なしはスキップ
 
-                //調べるマスが「相手の石」ならループ
-                while (BoardDisks[rY, rX].DiskState == GetOpponentDiskColor())
+                int rY = y + dY;
+                int rX = x + dX;
+
+                // まず隣が相手の石か
+                if (rY < 0 || rY >= BoardSize || rX < 0 || rX >= BoardSize) continue;
+                if (BoardDisks[rY, rX].DiskState != GetOpponentDiskColor()) continue;
+
+                // さらにその先を調べる
+                while (true)
                 {
-                    rY += dY; rX += dX;  //次のマスに移動
-
-                    //同色の石に出会った(打てると分かった)時
-                    if (BoardDisks[rY, rX].DiskState == GetDiskState(CurrentTurnDiskColor)) { return true; }  //打てると判定
+                    rY += dY;
+                    rX += dX;
+                    if (rY < 0 || rY >= BoardSize || rX < 0 || rX >= BoardSize) break;
+                    if (BoardDisks[rY, rX].DiskState == GetOpponentDiskColor()) continue;
+                    if (BoardDisks[rY, rX].DiskState == GetDiskState(CurrentTurnDiskColor)) return true;
+                    break;
                 }
             }
         }
-
-        return false;  //打てないと判定
+        return false;
     }
 
     private DiskState GetDiskState(PlayerTurn playerTurn)
