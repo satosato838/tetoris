@@ -10,7 +10,7 @@ public class OseroCellView : MonoBehaviour
     [SerializeField] private Image _diskImage;
     Color Clear = new Color(1, 1, 1, 0);
 
-    public (int, int) XY { get; private set; }
+    public (int, int) YX { get; private set; }
 
     public Action<(int, int)> OnClick;
     private float _lastClickTime;
@@ -22,14 +22,14 @@ public class OseroCellView : MonoBehaviour
         {
             if (Time.time - _lastClickTime < 0.2f) return;
             _lastClickTime = Time.time;
-            OnClick?.Invoke(XY);
+            OnClick?.Invoke(YX);
         });
         _btn.triggers.Add(entry);
     }
 
-    public void Init((int, int) xy, Action<(int, int)> onClick)
+    public void Init((int, int) yx, Action<(int, int)> onClick)
     {
-        XY = xy;
+        YX = yx;
         OnClick = onClick;
         Reset();
     }
