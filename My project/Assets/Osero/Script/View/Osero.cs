@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using System.Collections.Generic;
 
 public class Osero
 {
@@ -79,7 +78,6 @@ public class Osero
     private void PlayerChange()
     {
         CurrentTurnDiskColor = CurrentTurnDiskColor == PlayerTurn.Black ? PlayerTurn.White : PlayerTurn.Black;
-        Debug.Log("PlayerChange CurrentTurnDiskColor:" + CurrentTurnDiskColor.ToString());
     }
 
 
@@ -116,7 +114,6 @@ public class Osero
                 BoardDisks[y][x].RefreshDot(IsSetDisk((y, x)));
             }
         }
-        Debug.Log("Skip CurrentTurnDiskColor:" + CurrentTurnDiskColor.ToString());
         PlayerSkip.Invoke();
     }
 
