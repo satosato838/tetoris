@@ -30,6 +30,9 @@ public class Osero
     public PlayerTurn CurrentTurnDiskColor { get; private set; }
 
     public Result GameResult { get; private set; }
+
+    public int GetWhiteDiskCount => BoardDisks.SelectMany((disks, i) => disks.Select(disk => disk.DiskState)).Count(v => v == DiskState.White);
+    public int GetBlackDiskCount => BoardDisks.SelectMany((disks, i) => disks.Select(disk => disk.DiskState)).Count(v => v == DiskState.Black);
     public Osero()
     {
         StartGame();
@@ -184,9 +187,8 @@ public class Osero
 
     public void GameOver()
     {
-        var allDisks = BoardDisks.SelectMany((disks, i) => disks.Select(disk => disk.DiskState));
-        var blackCount = allDisks.Count(v => v == DiskState.Black);
-        var whiteCount = allDisks.Count(v => v == DiskState.White);
+        var blackCount = GetBlackDiskCount;
+        var whiteCount = GetWhiteDiskCount;
         if (blackCount == whiteCount)
         {
             GameResult = Result.Drow;

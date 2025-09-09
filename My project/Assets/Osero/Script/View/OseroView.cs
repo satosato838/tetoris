@@ -6,6 +6,7 @@ public class OseroView : MonoBehaviour
     public const int BoardSize = 8;
     [SerializeField] private OseroCellView OseroCellPrefab;
     [SerializeField] private Transform OseroCellParent;
+    [SerializeField] private OseroGameScoreView _oseroGameScoreView;
     private Osero _osero;
     private Color ClearColor => new Color(1, 1, 1, 0);
     private List<List<OseroCellView>> _AllCells = new List<List<OseroCellView>>();
@@ -64,5 +65,6 @@ public class OseroView : MonoBehaviour
                 });
             }
         }
+        _oseroGameScoreView.Refresh(_osero.GetWhiteDiskCount, _osero.GetBlackDiskCount);
     }
 }
