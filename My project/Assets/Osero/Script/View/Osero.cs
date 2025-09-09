@@ -14,7 +14,7 @@ public class Osero
     public enum Result
     {
         None,
-        Drow,
+        Draw,
         BlackWin,
         WhiteWin
     }
@@ -185,13 +185,13 @@ public class Osero
         return allDisks.All(v => v != DiskState.None) || allDisks.All(v => v == DiskState.Black) || allDisks.All(v => v == DiskState.White);
     }
 
-    public void GameOver()
+    private void GameOver()
     {
         var blackCount = GetBlackDiskCount;
         var whiteCount = GetWhiteDiskCount;
         if (blackCount == whiteCount)
         {
-            GameResult = Result.Drow;
+            GameResult = Result.Draw;
         }
         else
         {

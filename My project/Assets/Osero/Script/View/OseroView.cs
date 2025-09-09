@@ -7,6 +7,8 @@ public class OseroView : MonoBehaviour
     [SerializeField] private OseroCellView OseroCellPrefab;
     [SerializeField] private Transform OseroCellParent;
     [SerializeField] private OseroGameScoreView _oseroGameScoreView;
+    [SerializeField] private OseroGameResult _oseroGameResultView;
+    [SerializeField] private GameObject _view;
     private Osero _osero;
     private Color ClearColor => new Color(1, 1, 1, 0);
     private List<List<OseroCellView>> _AllCells = new List<List<OseroCellView>>();
@@ -27,12 +29,14 @@ public class OseroView : MonoBehaviour
             }
             _AllCells.Add(cells);
         }
-        GameStart();
+        Hide();
     }
 
     public void GameStart()
     {
+        Show();
         _osero = new Osero();
+        _oseroGameResultView.Hide();
         Refresh();
     }
     public void PlaceDisk((int, int) pos)
@@ -66,5 +70,24 @@ public class OseroView : MonoBehaviour
             }
         }
         _oseroGameScoreView.Refresh(_osero.GetWhiteDiskCount, _osero.GetBlackDiskCount);
+        if (_osero.IsGameEnd())
+        {
+            _oseroGameResultView.Show(_osero.GameResult, _osero.GameResult switch
+            {
+                Osero.Result.None => ClearColor,
+                Osero.Result.Draw => ClearColor,
+                Osero.Result.BlackWin => Color.black,
+                Osero.Result.WhiteWin => Color.white,
+            });
+        }
+    }
+
+    public void Show()
+    {
+        this._view.SetActive(true);
+    }
+    public void Hide()
+    {
+        this._view.SetActive(false);
     }
 }
