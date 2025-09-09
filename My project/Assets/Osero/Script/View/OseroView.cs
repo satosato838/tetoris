@@ -1,19 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OseroView : MonoBehaviour
 {
     public const int BoardSize = 8;
     [SerializeField] private OseroCellView OseroCellPrefab;
+    [SerializeField] private Button _Skipbtn;
+    [SerializeField] private GameObject _Skip;
     [SerializeField] private Transform OseroCellParent;
     [SerializeField] private OseroGameScoreView _oseroGameScoreView;
     [SerializeField] private OseroGameResult _oseroGameResultView;
     [SerializeField] private GameObject _view;
     private Osero _osero;
     private Color ClearColor => new Color(1, 1, 1, 0);
+    private bool IsShowSkip => _Skip.activeSelf;
     private List<List<OseroCellView>> _AllCells = new List<List<OseroCellView>>();
     void Start()
     {
+        _Skipbtn.onClick.AddListener(() =>
+        {
+            _osero.Skip();
+            Refresh();
+        });
         for (int y = 0; y < BoardSize; y++)
         {
             var cells = new List<OseroCellView>();
@@ -35,12 +44,14 @@ public class OseroView : MonoBehaviour
     public void GameStart()
     {
         Show();
-        _osero = new Osero();
+        _osero = new Osero(() => ShowSkipEffect());
         _oseroGameResultView.Hide();
+        SkipEffectHide();
         Refresh();
     }
     public void PlaceDisk((int, int) pos)
     {
+        if (IsShowSkip) return;
         _osero.PlaceDisk(pos);
         Refresh();
     }
@@ -81,7 +92,15 @@ public class OseroView : MonoBehaviour
             });
         }
     }
-
+    private void ShowSkipEffect()
+    {
+        _Skip.gameObject.SetActive(true);
+        Invoke(nameof(SkipEffectHide), 2.0f);
+    }
+    private void SkipEffectHide()
+    {
+        _Skip.gameObject.SetActive(false);
+    }
     public void Show()
     {
         this._view.SetActive(true);

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class Osero
 {
@@ -33,9 +35,12 @@ public class Osero
 
     public int GetWhiteDiskCount => BoardDisks.SelectMany((disks, i) => disks.Select(disk => disk.DiskState)).Count(v => v == DiskState.White);
     public int GetBlackDiskCount => BoardDisks.SelectMany((disks, i) => disks.Select(disk => disk.DiskState)).Count(v => v == DiskState.Black);
-    public Osero()
+    Action PlayerSkip;
+    public bool IsAnyDot => BoardDisks.SelectMany((disks, i) => disks.Select(disk => disk)).Any(v => v.IsDot);
+    public Osero(Action skip)
     {
         StartGame();
+        PlayerSkip = skip;
     }
 
     private void StartGame()
@@ -66,14 +71,15 @@ public class Osero
         {
             BoardDisks[yx.Item1][yx.Item2].SetState(GetDiskState(CurrentTurnDiskColor));
             ReverseDisk(yx);
-            CurrentTurnDiskColor = CurrentTurnDiskColor == PlayerTurn.Black ? PlayerTurn.White : PlayerTurn.Black;
+            PlayerChange();
             RefreshBoard();
         }
     }
 
-    public void Reset()
+    private void PlayerChange()
     {
-        StartGame();
+        CurrentTurnDiskColor = CurrentTurnDiskColor == PlayerTurn.Black ? PlayerTurn.White : PlayerTurn.Black;
+        Debug.Log("PlayerChange CurrentTurnDiskColor:" + CurrentTurnDiskColor.ToString());
     }
 
 
@@ -86,10 +92,32 @@ public class Osero
                 BoardDisks[y][x].RefreshDot(IsSetDisk((y, x)));
             }
         }
+
         if (IsGameEnd())
         {
             GameOver();
         }
+        else
+        {
+            if (!IsAnyDot)
+            {
+                Skip();
+            }
+        }
+    }
+
+    public void Skip()
+    {
+        PlayerChange();
+        for (int y = 0; y < BoardSize; y++)
+        {
+            for (int x = 0; x < BoardSize; x++)
+            {
+                BoardDisks[y][x].RefreshDot(IsSetDisk((y, x)));
+            }
+        }
+        Debug.Log("Skip CurrentTurnDiskColor:" + CurrentTurnDiskColor.ToString());
+        PlayerSkip.Invoke();
     }
 
     private void ReverseDisk((int, int) yx)
@@ -181,8 +209,8 @@ public class Osero
     public bool IsGameEnd()
     {
         var allDisks = BoardDisks.SelectMany((disks, i) => disks.Select(disk => disk.DiskState));
-        //すべてのDiskがNoneでないか黒か白のみになったらゲーム終了
-        return allDisks.All(v => v != DiskState.None) || allDisks.All(v => v == DiskState.Black) || allDisks.All(v => v == DiskState.White);
+        //すべてのDiskが埋まったか黒か白のみになったらゲーム終了
+        return allDisks.All(v => v != DiskState.None) || GetBlackDiskCount == 0 || GetWhiteDiskCount == 0;
     }
 
     private void GameOver()
