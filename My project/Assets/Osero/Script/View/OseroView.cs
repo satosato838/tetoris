@@ -23,6 +23,10 @@ public class OseroView : MonoBehaviour
             _osero.Skip();
             Refresh();
         });
+#if UNITY_EDITOR
+        //debug only
+        _Skipbtn.gameObject.SetActive(false);
+#endif
         for (int y = 0; y < BoardSize; y++)
         {
             var cells = new List<OseroCellView>();
